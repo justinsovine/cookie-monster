@@ -1,0 +1,45 @@
+#!/bin/bash
+
+cat << "EOF"
+                .---. .---.
+               :     : o   :    me want cookie!
+           _..-:   o :     :-.._    /
+       .-''  '  `---' `---' "   ``-.
+     .'   "   '  "  .    "  . '  "  `.
+    :   '.---.,,.,...,.,.,.,..---.  ' ;
+    `. " `.                     .' " .'
+     `.  '`.                   .' ' .'
+      `.    `-._           _.-' "  .'  .----.
+        `. "    '"--...--"'  . ' .'  .'  o   `.
+        .'`-._'    " .     " _.-'`. :       o  :
+      .'      ```--.....--'''    ' `:_ o       :
+    .'    "     '         "     "   ; `.;";";";'
+   ;         '       "       '     . ; .' ; ; ;
+  ;     '         '       '   "    .'      .-'
+  '  "     "   '      "           "    _.-'"
+EOF
+
+cookies=$1
+max_percent=100
+percent=0
+
+for i in $(seq $cookies $END); do
+
+  # Display percent complete & cookies clicked
+  percent="$(($i*100/$cookies))"
+  echo -ne '  |= '$i' cookies clicked - '$percent'% complete =|\r'
+
+  if [ $(( $percent % 10 )) -eq 0 ] ; then
+    if [ $percent != 0 ] ; then
+      notify-send $percent'% complete!'
+    fi
+  fi
+
+  # Click cookie
+  xdotool mousemove 255 477 click 1 &
+
+  # Fuck the cookie police!
+  sleep 0.1
+done
+
+echo -ne '\n'
